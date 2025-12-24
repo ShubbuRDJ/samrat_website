@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Container from '../components/common/Container';
+import Reveal from '../components/common/Reveal';
 
 const images = Array.from({ length: 24 }).map(
     (_, i) => `https://picsum.photos/seed/gallery-${i}/600/400`
@@ -27,9 +28,11 @@ const Gallery = () => {
             {/* PAGE HEADER */}
             <section className="bg-white dark:bg-slate-700 py-10">
                 <Container>
-                    <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-gray-100">
-                        Gallery
-                    </h1>
+                    <Reveal>
+                        <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-gray-100">
+                            Gallery
+                        </h1>
+                    </Reveal>
                 </Container>
             </section>
 
@@ -38,19 +41,21 @@ const Gallery = () => {
                 <Container>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         {images.map((src, index) => (
-                            <button
-                                key={src}
-                                onClick={() => setActiveIndex(index)}
-                                className="group relative overflow-hidden rounded-lg focus:outline-none"
-                            >
-                                <img
-                                    src={src}
-                                    alt={`Gallery ${index + 1}`}
-                                    className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                    loading="lazy"
-                                />
-                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition" />
-                            </button>
+                            <Reveal key={src} delay={index * 80}>
+                                <button
+                                    key={src}
+                                    onClick={() => setActiveIndex(index)}
+                                    className="group relative overflow-hidden rounded-lg focus:outline-none"
+                                >
+                                    <img
+                                        src={src}
+                                        alt={`Gallery ${index + 1}`}
+                                        className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        loading="lazy"
+                                    />
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition" />
+                                </button>
+                            </Reveal>
                         ))}
                     </div>
                 </Container>

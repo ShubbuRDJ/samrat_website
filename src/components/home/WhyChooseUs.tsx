@@ -1,3 +1,5 @@
+import Reveal from "../common/Reveal";
+
 const items = [
     {
         title: '18+ Years Experience',
@@ -21,27 +23,39 @@ const WhyChooseUs = () => {
     return (
         <section className="bg-white dark:bg-darkSurface py-20">
             <div className="max-w-7xl mx-auto px-4">
-                <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white">
-                    Why Choose Rishiraj Security?
-                </h2>
 
-                <p className="mt-4 text-center text-gray-600 dark:text-gray-300">
-                    Trusted by hundreds of clients across India
-                </p>
+                {/* Heading */}
+                <Reveal>
+                    <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white">
+                        Why Choose Rishiraj Security?
+                    </h2>
+                </Reveal>
 
+                {/* Subtitle */}
+                <Reveal delay={120}>
+                    <p className="mt-4 text-center text-gray-600 dark:text-gray-300">
+                        Trusted by hundreds of clients across India
+                    </p>
+                </Reveal>
+
+                {/* Items */}
                 <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {items.map(item => (
-                        <div key={item.title} className="text-center">
-                            <div className="mx-auto w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-xl">
-                                ✔
+                    {items.map((item, index) => (
+                        <Reveal key={item.title} delay={index * 140}>
+                            <div className="text-center">
+                                <div className="mx-auto w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-xl">
+                                    ✔
+                                </div>
+
+                                <h3 className="mt-4 font-semibold text-lg text-gray-900 dark:text-white">
+                                    {item.title}
+                                </h3>
+
+                                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                                    {item.desc}
+                                </p>
                             </div>
-                            <h3 className="mt-4 font-semibold text-lg dark:text-white">
-                                {item.title}
-                            </h3>
-                            <p className="mt-2 text-gray-600 dark:text-gray-400">
-                                {item.desc}
-                            </p>
-                        </div>
+                        </Reveal>
                     ))}
                 </div>
             </div>
