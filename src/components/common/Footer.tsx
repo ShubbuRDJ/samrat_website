@@ -1,4 +1,46 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { routeConstants } from "../../constants/routeConstants";
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const Footer = () => {
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState("");
+
+    const handleInquiryClick = () => {
+        // ---- Validation ----
+        if (!email.trim()) {
+            setError("Email is required");
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            setError("Please enter a valid email address");
+            return;
+        }
+
+        // ---- Navigate with prefilled email ----
+        navigate(routeConstants.CONTACT_URL, {
+            state: { email },
+        });
+
+        // optional: reset local state
+        setEmail("");
+        setError("");
+    };
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+
+        // clear error dynamically while typing
+        if (error) {
+            setError("");
+        }
+    };
+
     return (
         <footer className="bg-primary text-white">
             <div className="max-w-7xl mx-auto px-6 py-14">
@@ -29,37 +71,39 @@ const Footer = () => {
                                 </svg>
                             </span>
                         </div>
-
                     </div>
 
                     {/* MIDDLE */}
                     <div>
-                        <h4 className="font-semibold tracking-wide mb-4">
-                            CONTACT
-                        </h4>
+                        <h4 className="font-semibold tracking-wide mb-4">CONTACT</h4>
 
-                        <p className="text-gray-300 mb-2">
-                            +91-8550909909
-                        </p>
-
-                        <p className="text-gray-300">
-                            info@rishirajsecurityforce.in
-                        </p>
+                        <p className="text-gray-300 mb-2">+91-8550909909</p>
+                        <p className="text-gray-300">info@rishirajsecurityforce.in</p>
                     </div>
 
                     {/* RIGHT */}
                     <div>
-                        <h4 className="font-semibold tracking-wide mb-4">
-                            TO KNOW MORE
-                        </h4>
+                        <h4 className="font-semibold tracking-wide mb-4">TO KNOW MORE</h4>
 
                         <input
                             type="email"
                             placeholder="Your Email Address"
-                            className="w-full px-4 py-3 rounded-md text-black mb-4"
+                            value={email}
+                            onChange={handleEmailChange}
+                            className={`w-full px-4 py-3 rounded-md text-black mb-4
+                ${error ? "border-2 border-red-500" : ""}
+              `}
                         />
 
-                        <button className="bg-secondary hover:bg-blue-700 transition px-6 py-3 rounded-full hover:text-white text-black">
+                        {/* Error message */}
+                        {error && (
+                            <p className="text-sm text-red-400 mb-3">{error}</p>
+                        )}
+
+                        <button
+                            onClick={handleInquiryClick}
+                            className="bg-secondary hover:bg-blue-700 transition px-6 py-3 rounded-full hover:text-white text-black"
+                        >
                             Submit Your Inquiry
                         </button>
                     </div>
